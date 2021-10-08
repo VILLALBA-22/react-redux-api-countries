@@ -1,0 +1,37 @@
+#countries {
+	padding: 20px 0;
+}
+
+@media (max-width: 900px) {
+	#countries {
+		padding: 20px 35px;
+	}
+}
+
+@media (max-width: 900px) {
+	.country-flag {
+		height: auto;
+	}
+}
+
+@media (max-width: 600px) {
+	.country-flag {
+		height: auto;
+	}
+	#title-toolbar {
+		font-size: 16px;
+		margin: 30px 0;
+	}
+	#theme-toolbar {
+		font-size: 12px;
+	}
+}
+@media (max-width: 690px) {
+	.css-puhdgc-MuiFormControl-root {
+		margin-bottom: 20px !important;
+	}
+	.css-1v1eqpf-MuiFormControl-root-MuiTextField-root {
+		margin: 20px 0px 30px 0px !important;
+	}
+}
+/* simple-select-region search-country */

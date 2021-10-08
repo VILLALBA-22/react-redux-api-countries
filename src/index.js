@@ -1,15 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { CssBaseline } from '@mui/material'
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import store from './redux/store'
-import Test from './components/Test'
+import Main from './components/Main.jsx'
 
-const Main = () => {
+const Root = () => {
 	return (
 		<Provider store={store}>
-			<Test />
+			<BrowserRouter>
+				<CssBaseline />
+				<Switch>
+					{/* <Route path='/:id' component={Details} /> */}
+					<Route path='/' component={Main} />
+				</Switch>
+			</BrowserRouter>
 		</Provider>
 	)
 }
 
-ReactDOM.render(<Main />, document.getElementById('root'))
+ReactDOM.render(<Root />, document.getElementById('root'))

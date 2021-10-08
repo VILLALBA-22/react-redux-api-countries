@@ -13,21 +13,23 @@ function selectCurrentCountries(state = [], { type, payload }) {
 	switch (type) {
 		case CURRENT_COUNTRIES:
 			return payload
+		case FILTER_COUNTRIES_REGION:
+			return payload
 		default:
 			return state
 	}
 }
 
-function filterCountries(state = {}, { type, payload }) {
-	switch (type) {
-		case FILTER_COUNTRIES_REGION:
-			return {}
-		case FILTER_COUNTRIES_SPECIFIC:
-			return {}
-		default:
-			return state
-	}
-}
+// function filterCountries(state = {}, { type, payload }) {
+// 	switch (type) {
+// 		case FILTER_COUNTRIES_REGION:
+// 			return {}
+// 		case FILTER_COUNTRIES_SPECIFIC:
+// 			return {}
+// 		default:
+// 			return state
+// 	}
+// }
 
 function setCurrentCountry(state = {}, { type, payload }) {
 	switch (type) {
@@ -49,7 +51,6 @@ function setTheme(state = '', { type, payload }) {
 
 const rootReducer = combineReducers({
 	selectCurrentCountries,
-	filterCountries,
 	setCurrentCountry,
 	setTheme,
 })

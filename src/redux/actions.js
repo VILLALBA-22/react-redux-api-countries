@@ -4,8 +4,6 @@ export const CURRENT_COUNTRIES = 'CURRENT_COUNTRIES'
 export function currentCountries(url) {
 	return async dispatch => {
 		const countries = await axios.get(url)
-
-		console.log(countries.data)
 		dispatch({
 			type: CURRENT_COUNTRIES,
 			payload: countries.data,
@@ -15,9 +13,15 @@ export function currentCountries(url) {
 
 export const FILTER_COUNTRIES_REGION = 'FILTER_COUNTRIES_REGION'
 export function filterCountriesRegion(region) {
-	return {
-		type: FILTER_COUNTRIES_REGION,
-		payload: region,
+	return async dispatch => {
+		const countries = await axios.get(
+			`https://restcountries.com/v3/region/${region}?fields=name,population,flags,region,capital`
+		)
+		console.log(countries)
+		dispatch({
+			type: FILTER_COUNTRIES_REGION,
+			payload: countries.data,
+		})
 	}
 }
 
