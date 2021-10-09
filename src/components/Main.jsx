@@ -6,7 +6,7 @@ import AppBar from './AppBar.jsx'
 import SearchCountry from './SearchCountry.jsx'
 import CurrentCountries from './CurrentCountries.jsx'
 
-const Main = ({ currentCountries, countries }) => {
+const Main = ({ currentCountries, countries, filterCountries }) => {
 	useEffect(() => {
 		currentCountries(
 			'https://restcountries.com/v3/region/europe?fields=name,population,flags,region,capital'
@@ -16,7 +16,10 @@ const Main = ({ currentCountries, countries }) => {
 		<div>
 			<AppBar />
 			<SearchCountry />
-			<CurrentCountries countries={countries} />
+			<CurrentCountries
+				countries={countries}
+				filterCountries={filterCountries}
+			/>
 		</div>
 	)
 }
@@ -24,6 +27,7 @@ const Main = ({ currentCountries, countries }) => {
 const mapStateToProps = state => {
 	return {
 		countries: state.selectCurrentCountries,
+		filterCountries: state.filterCountriesSpecific,
 	}
 }
 

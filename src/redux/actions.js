@@ -14,9 +14,12 @@ export function currentCountries(url) {
 export const FILTER_COUNTRIES_REGION = 'FILTER_COUNTRIES_REGION'
 export function filterCountriesRegion(region) {
 	return async dispatch => {
-		const countries = await axios.get(
-			`https://restcountries.com/v3/region/${region}?fields=name,population,flags,region,capital`
-		)
+		let url = `https://restcountries.com/v3/region/${region}?fields=name,population,flags,region,capital`
+		if (region === 'all') {
+			url = `https://restcountries.com/v3/all?fields=name,population,flags,region,capital`
+		}
+		console.log(region)
+		const countries = await axios.get(url)
 		console.log(countries)
 		dispatch({
 			type: FILTER_COUNTRIES_REGION,
@@ -26,18 +29,26 @@ export function filterCountriesRegion(region) {
 }
 
 export const FILTER_COUNTRIES_SPECIFIC = 'FILTER_COUNTRIES_SPECIFIC'
-export function filterCountriesSpecific(text) {
+export function filterCountriesSpecific(text, countries) {
 	return {
 		type: FILTER_COUNTRIES_SPECIFIC,
-		payload: text,
+		payload: { text, countries },
+	}
+}
+
+export const DEFAULT_COUNTRIES_SPECIFIC = 'DEFAULT_COUNTRIES_SPECIFIC'
+export function defaultCountriesSpecific() {
+	return {
+		type: DEFAULT_COUNTRIES_SPECIFIC,
+		payload: '',
 	}
 }
 
 export const SELECT_COUNTRY = 'SELECT_COUNTRY'
-export function selectCountry(text) {
+export function selectCountry(country) {
 	return {
 		type: SELECT_COUNTRY,
-		payload: text,
+		payload: country,
 	}
 }
 
@@ -46,5 +57,14 @@ export function changeTheme(theme) {
 	return {
 		type: CHANGE_THEME,
 		payload: theme,
+	}
+}
+
+export const CHANGE_TEXT = 'CHANGE_TEXT'
+export function changeText(text) {
+	console.log(text)
+	return {
+		type: CHANGE_TEXT,
+		payload: text,
 	}
 }

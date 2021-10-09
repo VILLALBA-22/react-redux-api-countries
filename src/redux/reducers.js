@@ -5,6 +5,8 @@ import {
 	FILTER_COUNTRIES_SPECIFIC,
 	SELECT_COUNTRY,
 	CHANGE_THEME,
+	DEFAULT_COUNTRIES_SPECIFIC,
+	CHANGE_TEXT,
 } from './actions'
 
 //Logica pendiente en TODO
@@ -20,21 +22,28 @@ function selectCurrentCountries(state = [], { type, payload }) {
 	}
 }
 
-// function filterCountries(state = {}, { type, payload }) {
-// 	switch (type) {
-// 		case FILTER_COUNTRIES_REGION:
-// 			return {}
-// 		case FILTER_COUNTRIES_SPECIFIC:
-// 			return {}
-// 		default:
-// 			return state
-// 	}
-// }
+function filterCountriesSpecific(state = [], { type, payload }) {
+	switch (type) {
+		case FILTER_COUNTRIES_SPECIFIC:
+			let regex = new RegExp(`^${payload.text}`, 'gim')
+			let filterCountries = payload.countries.filter(c =>
+				regex.test(c.name.common)
+			)
+			// if (filterCountries.length === 0) {
+			// 	filterCountries = [{ Mesagge: 'NO found' }]
+			// }
+			return filterCountries
+		case DEFAULT_COUNTRIES_SPECIFIC:
+			return []
+		default:
+			return state
+	}
+}
 
-function setCurrentCountry(state = {}, { type, payload }) {
+function currentCountry(state = {}, { type, payload }) {
 	switch (type) {
 		case SELECT_COUNTRY:
-			return {}
+			return payload
 		default:
 			return state
 	}
@@ -49,10 +58,21 @@ function setTheme(state = '', { type, payload }) {
 	}
 }
 
+function textToFilter(state = '', { type, payload }) {
+	switch (type) {
+		case CHANGE_TEXT:
+			return payload
+		default:
+			return state
+	}
+}
+
 const rootReducer = combineReducers({
 	selectCurrentCountries,
-	setCurrentCountry,
+	filterCountriesSpecific,
+	currentCountry,
 	setTheme,
+	textToFilter,
 })
 
 export default rootReducer

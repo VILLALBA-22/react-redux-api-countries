@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { filterCountriesRegion } from '../redux/actions.js'
+import {
+	filterCountriesRegion,
+	filterCountriesSpecific,
+	changeText,
+} from '../redux/actions.js'
 import {
 	Container,
 	InputAdornment,
@@ -13,16 +17,21 @@ import {
 } from '@mui/material/'
 import SearchIcon from '@mui/icons-material/Search'
 
-const SearchCountry = ({ filterCountriesRegion }) => {
+const SearchCountry = ({
+	filterCountriesSpecific,
+	filterCountriesRegion,
+	countries,
+	changeText,
+	textToSearch,
+}) => {
 	const [region, setRegion] = useState('Europe')
-	const [country, setCountry] = useState('')
+	const handleChangeCountry = event => {
+		changeText(event.target.value)
+		filterCountriesSpecific(event.target.value, countries)
+	}
 	const handleChangeRegion = event => {
 		setRegion(event.target.value)
-		console.log(event.target.value.toLowerCase())
 		filterCountriesRegion(event.target.value.toLowerCase())
-	}
-	const handleChangeCountry = event => {
-		setCountry(event.target.value)
 	}
 	return (
 		<Container
@@ -39,7 +48,7 @@ const SearchCountry = ({ filterCountriesRegion }) => {
 				id='search-country'
 				sx={{ m: 1, width: '400px', margin: '50px 0', marginRight: '20px' }}
 				placeholder='Search for a country...'
-				value={country}
+				value={textToSearch}
 				onChange={handleChangeCountry}
 				InputProps={{
 					startAdornment: (
@@ -65,14 +74,25 @@ const SearchCountry = ({ filterCountriesRegion }) => {
 					<MenuItem value={'Asia'}>Asia</MenuItem>
 					<MenuItem value={'Europe'}>Europe</MenuItem>
 					<MenuItem value={'Oceania'}>Oceania</MenuItem>
+					<MenuItem value={'All'}>All</MenuItem>
+
 				</Select>
 			</FormControl>
 		</Container>
 	)
 }
 
-const mapDispatchToProps = {
-	filterCountriesRegion,
+const mapStateToProps = state => {
+	return {
+		countries: state.selectCurrentCountries,
+		textToSearch: state.textToFilter,
+	}
 }
 
-export default connect(null, mapDispatchToProps)(SearchCountry)
+const mapDispatchToProps = {
+	filterCountriesRegion,
+	filterCountriesSpecific,
+	changeText,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchCountry)
