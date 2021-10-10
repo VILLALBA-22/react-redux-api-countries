@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import {
 	Container,
-	Button,
 	Card,
 	CardMedia,
 	CardContent,
@@ -9,17 +8,17 @@ import {
 	Grid,
 	Box,
 	Link,
-	useMediaQuery,
 } from '@mui/material/'
 import { connect } from 'react-redux'
-import './style.css'
 import { defaultCountriesSpecific, changeText } from '../redux/actions'
+import './style.css'
 
 function CurrentCountries({
 	countries,
 	filterCountries,
 	defaultCountriesSpecific,
 	changeText,
+	textToSearch,
 }) {
 	useEffect(() => {
 		defaultCountriesSpecific()
@@ -29,16 +28,26 @@ function CurrentCountries({
 	filterCountries.length === 0
 		? (countriesToShow = countries.slice(0, 8))
 		: (countriesToShow = filterCountries.slice(0, 8))
-	return (
+	return textToSearch.length > 0 && filterCountries.length === 0 ? (
+		<Container maxWidth='lg'>
+			<Typography
+				gutterBottom
+				variant='body1'
+				sx={{ fontWeight: 'bold', fontSize: '19px' }}
+			>
+				No found
+			</Typography>
+		</Container>
+	) : (
 		<Container>
 			<Grid container spacing={8} id='countries'>
-				{countriesToShow.map((e, p) => {
+				{countriesToShow.map(e => {
 					return (
 						<Grid item xs={12} sm={6} md={4} lg={3}>
 							<Link
 								href={`/${e.name.common}`}
 								underline='none'
-								key={e.name.common}
+								key={Math.random().toString(36).substr(2, 18)}
 							>
 								<Card>
 									<CardMedia
@@ -121,9 +130,15 @@ function CurrentCountries({
 	)
 }
 
+const mapStateToProps = state => {
+	return {
+		textToSearch: state.textToFilter,
+	}
+}
+
 const mapDispatchToProps = {
 	defaultCountriesSpecific,
 	changeText,
 }
 
-export default connect(null, mapDispatchToProps)(CurrentCountries)
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentCountries)

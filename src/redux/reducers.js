@@ -9,8 +9,6 @@ import {
 	CHANGE_TEXT,
 } from './actions'
 
-//Logica pendiente en TODO
-
 function selectCurrentCountries(state = [], { type, payload }) {
 	switch (type) {
 		case CURRENT_COUNTRIES:
@@ -29,9 +27,6 @@ function filterCountriesSpecific(state = [], { type, payload }) {
 			let filterCountries = payload.countries.filter(c =>
 				regex.test(c.name.common)
 			)
-			// if (filterCountries.length === 0) {
-			// 	filterCountries = [{ Mesagge: 'NO found' }]
-			// }
 			return filterCountries
 		case DEFAULT_COUNTRIES_SPECIFIC:
 			return []
@@ -49,10 +44,14 @@ function currentCountry(state = {}, { type, payload }) {
 	}
 }
 
-function setTheme(state = '', { type, payload }) {
+function setTheme(
+	state = localStorage.getItem('theme') || 'light',
+	{ type, payload }
+) {
 	switch (type) {
 		case CHANGE_THEME:
-			return {}
+			localStorage.setItem('theme', payload)
+			return payload
 		default:
 			return state
 	}

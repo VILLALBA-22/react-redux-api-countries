@@ -18,9 +18,7 @@ export function filterCountriesRegion(region) {
 		if (region === 'all') {
 			url = `https://restcountries.com/v3/all?fields=name,population,flags,region,capital`
 		}
-		console.log(region)
 		const countries = await axios.get(url)
-		console.log(countries)
 		dispatch({
 			type: FILTER_COUNTRIES_REGION,
 			payload: countries.data,
