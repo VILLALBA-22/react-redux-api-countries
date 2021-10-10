@@ -13,7 +13,6 @@ const SelectedCountry = ({ selectCountry, country }) => {
 	const params = useParams()
 	const currentCountry = params.country
 	const [borders, setBorders] = useState([])
-	console.log(borders)
 	useEffect(() => {
 		axios
 			.get(

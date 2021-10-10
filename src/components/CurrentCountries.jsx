@@ -56,6 +56,7 @@ function CurrentCountries({
 										alt={`${e.name.common} flag`}
 										height='170px'
 										className='country-flag'
+										sx={{ borderBottom: '1px solid #dbd6d6' }}
 									/>
 									<CardContent>
 										<Typography
