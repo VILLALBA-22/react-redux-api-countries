@@ -20,4 +20,4 @@ REST Countries API with color theme switcher is a project where you can search f
 
 ## [Preview site]
 
-[preview site]: #
+[preview site]: "https://hopeful-williams-ba11ae.netlify.app/"
